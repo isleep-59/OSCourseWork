@@ -1,6 +1,13 @@
 #include "widget.h"
 #include "ui_widget.h"
 
+int prcsTimePieceIndex = 0;
+int prcsMultiLevelIndex = 0;
+
+void init() {
+
+}
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -35,4 +42,11 @@ void Widget::on_comboBox_activated(const QString &arg1)
         ui->label_priority_2->show();
         ui->label_priority_3->show();
     }
+}
+
+void Widget::on_pushButton_add_clicked()
+{
+    int arriveTime = ui->lineEdit_arriveTime->text().toInt();
+    int runTime = ui->lineEdit_runTime->text().toInt();
+    int timePiece = ui->lineEdit_timePiece->text().toInt();
 }
