@@ -95,6 +95,10 @@ void Widget::on_pushButton_add_clicked()
 void Widget::on_pushButton_delete_clicked()
 {
     ui->tableWidget_readyQueue->removeRow(ui->tableWidget_readyQueue->currentRow());
+    for(int i = 1; i <= ui->tableWidget_readyQueue->rowCount(); ++i) {
+        QString index_s(new QChar(char(i + '0')));
+        ui->tableWidget_readyQueue->setItem(i - 1, 0, new QTableWidgetItem(index_s.left(1)));
+    }
 }
 
 void Widget::on_pushButton_select_clicked()

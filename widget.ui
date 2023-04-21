@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1708</width>
-    <height>1090</height>
+    <width>1699</width>
+    <height>1070</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,14 +16,14 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>10</y>
+     <x>20</x>
+     <y>20</y>
      <width>821</width>
      <height>411</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_prcs">
     <attribute name="title">
@@ -59,7 +59,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>选择</string>
+      <string>暂停</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_reset">
@@ -75,7 +75,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>重置</string>
+      <string>暂停</string>
      </property>
     </widget>
     <widget class="QLabel" name="label">
@@ -214,7 +214,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>添加</string>
+       <string>暂停</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_delete">
@@ -227,7 +227,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>删除</string>
+       <string>暂停</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit_priority_2">
@@ -496,10 +496,10 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>900</x>
-     <y>60</y>
-     <width>771</width>
-     <height>361</height>
+     <x>20</x>
+     <y>450</y>
+     <width>821</width>
+     <height>601</height>
     </rect>
    </property>
    <property name="editTriggers">
@@ -535,17 +535,95 @@
     </property>
    </column>
   </widget>
-  <widget class="QLabel" name="label_18">
+  <widget class="QTableWidget" name="tableWidget_runningQueue">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>910</x>
-     <y>20</y>
-     <width>91</width>
-     <height>41</height>
+     <x>860</x>
+     <y>450</y>
+     <width>821</width>
+     <height>601</height>
+    </rect>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectRows</enum>
+   </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
+   <column>
+    <property name="text">
+     <string>序号</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>开始时间</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>结束时间</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>周转时间</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLCDNumber" name="lcdNumber">
+   <property name="geometry">
+    <rect>
+     <x>870</x>
+     <y>40</y>
+     <width>311</width>
+     <height>191</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>940</x>
+     <y>260</y>
+     <width>171</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
-    <string>就绪队列：</string>
+    <string>开始</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>940</x>
+     <y>350</y>
+     <width>171</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>暂停</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>1210</x>
+     <y>40</y>
+     <width>471</width>
+     <height>391</height>
+    </rect>
    </property>
   </widget>
  </widget>
