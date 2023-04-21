@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_prcs">
     <attribute name="title">
@@ -49,7 +49,7 @@
       </property>
      </item>
     </widget>
-    <widget class="QPushButton" name="pushButton_start">
+    <widget class="QPushButton" name="pushButton_select">
      <property name="geometry">
       <rect>
        <x>530</x>
@@ -59,10 +59,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>开始</string>
+      <string>选择</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_reset">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>660</x>
@@ -88,7 +91,10 @@
       <string>选择算法：</string>
      </property>
     </widget>
-    <widget class="QGroupBox" name="groupBox_timePiece">
+    <widget class="QGroupBox" name="groupBox_prcs">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -139,22 +145,6 @@
        <string>时间片大小：</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_1">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>130</y>
-        <width>101</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>序号：</string>
-      </property>
-     </widget>
      <widget class="QLineEdit" name="lineEdit_arriveTime">
       <property name="geometry">
        <rect>
@@ -185,24 +175,14 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_index">
+     <widget class="QLineEdit" name="lineEdit_priority_1">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>170</y>
-        <width>101</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_priority_1">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>80</y>
+        <y>171</y>
         <width>101</width>
         <height>31</height>
        </rect>
@@ -214,8 +194,8 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>40</y>
+        <x>70</x>
+        <y>130</y>
         <width>101</width>
         <height>31</height>
        </rect>
@@ -227,8 +207,8 @@
      <widget class="QPushButton" name="pushButton_add">
       <property name="geometry">
        <rect>
-        <x>240</x>
-        <y>160</y>
+        <x>580</x>
+        <y>70</y>
         <width>101</width>
         <height>51</height>
        </rect>
@@ -240,7 +220,7 @@
      <widget class="QPushButton" name="pushButton_delete">
       <property name="geometry">
        <rect>
-        <x>410</x>
+        <x>580</x>
         <y>160</y>
         <width>101</width>
         <height>51</height>
@@ -253,8 +233,8 @@
      <widget class="QLineEdit" name="lineEdit_priority_2">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>131</y>
+        <x>240</x>
+        <y>170</y>
         <width>101</width>
         <height>31</height>
        </rect>
@@ -263,8 +243,8 @@
      <widget class="QLineEdit" name="lineEdit_priority_3">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>180</y>
+        <x>410</x>
+        <y>170</y>
         <width>101</width>
         <height>31</height>
        </rect>
@@ -273,8 +253,8 @@
      <widget class="QLabel" name="label_priority_1">
       <property name="geometry">
        <rect>
-        <x>550</x>
-        <y>79</y>
+        <x>40</x>
+        <y>170</y>
         <width>50</width>
         <height>31</height>
        </rect>
@@ -286,8 +266,8 @@
      <widget class="QLabel" name="label_priority_2">
       <property name="geometry">
        <rect>
-        <x>550</x>
-        <y>130</y>
+        <x>210</x>
+        <y>170</y>
         <width>50</width>
         <height>31</height>
        </rect>
@@ -299,8 +279,8 @@
      <widget class="QLabel" name="label_priority_3">
       <property name="geometry">
        <rect>
-        <x>550</x>
-        <y>180</y>
+        <x>380</x>
+        <y>170</y>
         <width>50</width>
         <height>31</height>
        </rect>
@@ -312,11 +292,9 @@
      <zorder>label_2</zorder>
      <zorder>label_3</zorder>
      <zorder>label_11</zorder>
-     <zorder>label_1</zorder>
      <zorder>lineEdit_arriveTime</zorder>
      <zorder>lineEdit_runTime</zorder>
      <zorder>lineEdit_timePiece</zorder>
-     <zorder>lineEdit_index</zorder>
      <zorder>lineEdit_priority_1</zorder>
      <zorder>label_12</zorder>
      <zorder>pushButton_delete</zorder>
@@ -328,13 +306,194 @@
      <zorder>label_priority_3</zorder>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_2">
+   <widget class="QWidget" name="tab_jb">
     <attribute name="title">
      <string>作业调度</string>
     </attribute>
+    <widget class="QPushButton" name="pushButton_reset_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>20</y>
+       <width>121</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>重置</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_select_2">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>20</y>
+       <width>121</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>选择</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>30</y>
+       <width>91</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>选择算法：</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_jb">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>110</y>
+       <width>741</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>数据输入</string>
+     </property>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>90</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>到达时间：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>90</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>运行时间：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>90</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>时间片大小：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_arriveTime_2">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>130</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_runTime_2">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>130</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_timePiece_2">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>130</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_add_2">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>70</y>
+        <width>101</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>添加</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_delete_2">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>160</y>
+        <width>101</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>删除</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QComboBox" name="comboBox_2">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>30</y>
+       <width>331</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>先来先服务</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>短作业优先</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>最高相应比优先</string>
+      </property>
+     </item>
+    </widget>
    </widget>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableWidget" name="tableWidget_readyQueue">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>900</x>
@@ -343,6 +502,18 @@
      <height>361</height>
     </rect>
    </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectRows</enum>
+   </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>false</bool>
+   </attribute>
    <column>
     <property name="text">
      <string>序号</string>
