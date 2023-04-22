@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_prcs">
     <attribute name="title">
@@ -196,7 +196,7 @@
        <rect>
         <x>70</x>
         <y>130</y>
-        <width>101</width>
+        <width>121</width>
         <height>31</height>
        </rect>
       </property>
@@ -515,7 +515,10 @@
     <bool>true</bool>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>false</bool>
+    <bool>true</bool>
+   </attribute>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>160</number>
    </attribute>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>
@@ -542,11 +545,16 @@
    </column>
    <column>
     <property name="text">
+     <string>所在队列</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
      <string>进度</string>
     </property>
    </column>
   </widget>
-  <widget class="QTableWidget" name="tableWidget_runningQueue">
+  <widget class="QTableWidget" name="tableWidget_finishedQueue">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -565,7 +573,10 @@
     <enum>QAbstractItemView::SelectRows</enum>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>false</bool>
+    <bool>true</bool>
+   </attribute>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>160</number>
    </attribute>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>

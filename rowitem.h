@@ -9,13 +9,15 @@ class RowItem
 {
 public:
     RowItem();
-    RowItem(RowItem& ri);
-    RowItem(int index, int arriveTime, int runTime, int priority = 0);
+    RowItem(int index, int arriveTime, int runTime, int priority, int currentQueue);
+    //~RowItem();
+
     int index;
     int arriveTime;
     int runTime;
     int priority;
-    QProgressBar progressBar;
+    int currentQueue;
+    QProgressBar* progressBar;
     int startTime;
     int finishTime;
     int turnTime;

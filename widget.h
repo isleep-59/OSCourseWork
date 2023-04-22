@@ -17,10 +17,6 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-    void prcs_hide();
-    void prcs_show();
-    void prcs_clear();
-    void jb_clear();
 
 private slots:
     void on_comboBox_activated(const QString &arg1);
@@ -40,6 +36,7 @@ private slots:
 private:
     Ui::Widget *ui;
     std::vector<RowItem> ris;
+    std::vector<bool> vis;
     int timePiece;
     int priorities[3];
 };
