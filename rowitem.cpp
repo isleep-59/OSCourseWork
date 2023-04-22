@@ -19,7 +19,7 @@ RowItem::RowItem(int index, int arriveTime, int runTime, int priority, int curre
     this->priority = priority;
     this->currentQueue = currentQueue;
     this->progressBar = new QProgressBar();
-    this->runTime = 0;
+    this->runTime = runTime;
     this->startTime = 0;
     this->turnTime = 0;
 }

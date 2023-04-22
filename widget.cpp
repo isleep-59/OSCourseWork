@@ -168,8 +168,9 @@ void Widget::on_pushButton_reset_clicked()
     ui->lineEdit_priority_3->clear();
     ui->lineEdit_runTime->clear();
     ui->lineEdit_timePiece->clear();
-    ui->tableWidget_readyQueue->clear();
-    ui->tableWidget_finishedQueue->clear();
+    while(ui->tableWidget_readyQueue->rowCount()) {
+        ui->tableWidget_readyQueue->removeRow(0);
+    }
 
     ui->comboBox->setEnabled(true);
     ui->pushButton_select->setEnabled(true);
@@ -185,6 +186,10 @@ void Widget::on_pushButton_reset_clicked()
 
     ris.clear();
     vis.clear();
+    timePiece = 0;
+    for(int i = 0; i < 3; ++i) {
+        priorities[i] = 0;
+    }
 }
 
 void Widget::on_pushButton_select_2_clicked()
