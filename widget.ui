@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_prcs">
     <attribute name="title">
@@ -59,7 +59,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>暂停</string>
+      <string>选择</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_reset">
@@ -75,7 +75,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>暂停</string>
+      <string>重置</string>
      </property>
     </widget>
     <widget class="QLabel" name="label">
@@ -214,7 +214,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>暂停</string>
+       <string>添加</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_delete">
@@ -227,7 +227,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>暂停</string>
+       <string>删除</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit_priority_2">
@@ -508,8 +508,14 @@
    <property name="selectionBehavior">
     <enum>QAbstractItemView::SelectRows</enum>
    </property>
-   <attribute name="horizontalHeaderVisible">
+   <property name="gridStyle">
+    <enum>Qt::DashLine</enum>
+   </property>
+   <property name="cornerButtonEnabled">
     <bool>true</bool>
+   </property>
+   <attribute name="horizontalHeaderVisible">
+    <bool>false</bool>
    </attribute>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>
@@ -534,6 +540,11 @@
      <string>优先级</string>
     </property>
    </column>
+   <column>
+    <property name="text">
+     <string>进度</string>
+    </property>
+   </column>
   </widget>
   <widget class="QTableWidget" name="tableWidget_runningQueue">
    <property name="enabled">
@@ -554,7 +565,7 @@
     <enum>QAbstractItemView::SelectRows</enum>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>

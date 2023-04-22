@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QMessageBox>
+#include <vector>
+#include "rowitem.h"
 
 namespace Ui {
 class Widget;
@@ -31,13 +33,15 @@ private slots:
 
     void on_pushButton_reset_clicked();
 
-
     void on_pushButton_select_2_clicked();
 
     void on_pushButton_reset_2_clicked();
 
 private:
     Ui::Widget *ui;
+    std::vector<RowItem> ris;
+    int timePiece;
+    int priorities[3];
 };
 
 #endif // WIDGET_H
