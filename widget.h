@@ -57,8 +57,11 @@ private:
     std::vector<RowItem> ris;
     int timePiece;
     int priorities[3];
+    int curTimePiece;
     int time;
     bool status;
+    int idx;
+    int maxx;
     QTimer* timer;
 };
 
