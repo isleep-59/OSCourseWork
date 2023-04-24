@@ -2,10 +2,12 @@
 #define WIDGET_H
 
 #include <windows.h>
-#include <thread>
 #include <QWidget>
 #include <QMessageBox>
+#include <QDebug>
+#include <QTimer>
 #include <vector>
+#include <queue>
 #include "rowitem.h"
 
 namespace Ui {
@@ -19,9 +21,15 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-    void run();
+    void RR();
+    void MLFQ();
+    void FCFS();
+    void SJF();
+    void HRN();
 
 private slots:
+    void timeout_slot();
+
     void on_comboBox_activated(const QString &arg1);
 
     void on_pushButton_add_clicked();
@@ -44,10 +52,6 @@ private slots:
 
     void on_pushButton_start_clicked();
 
-    void on_pushButton_pause_clicked();
-
-    void on_pushButton_resume_clicked();
-
 private:
     Ui::Widget *ui;
     std::vector<RowItem> ris;
@@ -55,6 +59,7 @@ private:
     int priorities[3];
     int time;
     bool status;
+    QTimer* timer;
 };
 
 #endif // WIDGET_H

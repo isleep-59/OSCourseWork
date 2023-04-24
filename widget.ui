@@ -592,27 +592,14 @@
   <widget class="QPushButton" name="pushButton_start">
    <property name="geometry">
     <rect>
-     <x>970</x>
-     <y>260</y>
-     <width>111</width>
-     <height>41</height>
+     <x>950</x>
+     <y>300</y>
+     <width>151</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
     <string>开始</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_pause">
-   <property name="geometry">
-    <rect>
-     <x>970</x>
-     <y>389</y>
-     <width>111</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>暂停</string>
    </property>
   </widget>
   <widget class="QListWidget" name="listWidget">
@@ -623,19 +610,6 @@
      <width>471</width>
      <height>391</height>
     </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_resume">
-   <property name="geometry">
-    <rect>
-     <x>970</x>
-     <y>325</y>
-     <width>111</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>继续</string>
    </property>
   </widget>
  </widget>

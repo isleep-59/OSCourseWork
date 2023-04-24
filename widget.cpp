@@ -6,7 +6,9 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
+    timer = new QTimer;
     ui->setupUi(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timeout_slot()));
 
     status = false;
     time = 0;
@@ -34,8 +36,6 @@ Widget::Widget(QWidget *parent) :
     ui->pushButton_reset_2->setEnabled(false);
 
     ui->pushButton_start->setEnabled(false);
-    ui->pushButton_pause->setEnabled(false);
-    ui->pushButton_resume->setEnabled(false);
 
     ui->tableWidget_readyQueue->showColumn(3);
     ui->tableWidget_readyQueue->hideColumn(4);
@@ -192,7 +192,6 @@ void Widget::on_pushButton_select_clicked()
 
 void Widget::on_pushButton_reset_clicked()
 {
-    ui->pushButton_pause->setEnabled(false);
     ui->pushButton_start->setEnabled(false);
 
     ui->lineEdit_arriveTime->clear();
@@ -241,7 +240,6 @@ void Widget::on_pushButton_select_2_clicked()
 
 void Widget::on_pushButton_reset_2_clicked()
 {
-    ui->pushButton_pause->setEnabled(false);
     ui->pushButton_start->setEnabled(false);
 
     ui->lineEdit_arriveTime_2->clear();
@@ -323,59 +321,116 @@ void Widget::on_pushButton_delete_2_clicked()
     }
 }
 
-void Widget::run() {
-    while(true) {
-        if(status) {
-            ui->lcdNumber->display(QString::number(time));
+void Widget::timeout_slot() {
+    ui->lcdNumber->display(QString::number(time));
+    if(ris.size() == 0) {
+        timer->stop();
+        return;
+    }
 
-            if(ui->tabWidget->tabBar()->currentIndex() == 0) {
-                if(ui->comboBox->currentIndex() == 0) {
-
-                }
-                else if(ui->comboBox->currentIndex() == 1) {
-
-                }
-            }
-            else if(ui->tabWidget->tabBar()->currentIndex() == 1) {
-                if(ui->comboBox_2->currentIndex() == 0) {
-
-                }
-                else if(ui->comboBox_2->currentIndex() == 1) {
-
-                }
-                else if(ui->comboBox_2->currentIndex() == 2) {
-
-                }
-            }
-
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            time++;
+    if(ui->tabWidget->tabBar()->currentIndex() == 0) {
+        if(ui->comboBox->currentIndex() == 0) {
+            RR();
+        }
+        else if(ui->comboBox->currentIndex() == 1) {
+            MLFQ();
+        }
+    }
+    else if(ui->tabWidget->tabBar()->currentIndex() == 1) {
+        if(ui->comboBox_2->currentIndex() == 0) {
+            FCFS();
+        }
+        else if(ui->comboBox_2->currentIndex() == 1) {
+            SJF();
+        }
+        else if(ui->comboBox_2->currentIndex() == 2) {
+            HRN();
         }
     }
 }
 
 void Widget::on_pushButton_start_clicked()
 {
-    status = true;
     ui->pushButton_start->setEnabled(false);
-    ui->pushButton_pause->setEnabled(true);
+    timeout_slot();
+    timer->start(1000);
+}
 
-    std::thread my_thread(run);
-    my_thread.detach();
+void Widget::RR() {
+    //找出到达队列中最小的优先级
+    int idx = -1, maxx = 999999999;
+    for(int i = 0; i < ris.size(); ++i) {
+        if(ris[i].arriveTime <= time && ris[i].priority < maxx) {
+            idx = i;
+            maxx = ris[i].priority;
+        }
+    }
+
+    if(idx < 0) {
+        ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行进程，等待中...")));
+        time++;
+    }
+    else {
+        QString str("进程");
+        str.append(QString::number(ris[idx].index));
+        str.append("正在运行中...");
+        ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+
+        if(ris[idx].doneTime == 0) {
+            ris[idx].startTime = time;
+        }
+
+        ris[idx].doneTime++;
+        ris[idx].progressBar->setValue(ris[idx].doneTime);
+
+        //如果在时间片内执行结束
+        if(ris[idx].doneTime == ris[idx].runTime) {
+            ris[idx].finishTime = time + 1;
+
+            int rc = ui->tableWidget_finishedQueue->rowCount();
+            ui->tableWidget_finishedQueue->insertRow(rc);
+            ui->tableWidget_finishedQueue->setItem(rc, 0, new QTableWidgetItem(QString::number(ris[idx].index)));
+            ui->tableWidget_finishedQueue->setItem(rc, 1, new QTableWidgetItem(QString::number(ris[idx].startTime)));
+            ui->tableWidget_finishedQueue->setItem(rc, 2, new QTableWidgetItem(QString::number(ris[idx].finishTime)));
+            ui->tableWidget_finishedQueue->setItem(rc, 3, new QTableWidgetItem(QString::number(ris[idx].turnTime)));
+            for(int j = 0; j < 4; ++j) {
+                ui->tableWidget_finishedQueue->item(rc, j)->setTextAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+            }
+
+            int rmv = idx;
+            ui->tableWidget_readyQueue->removeRow(rmv);
+            ris.erase(ris.begin() + rmv, ris.begin() + rmv + 1);
+
+            QString str("进程");
+            str.append(QString::number(ris[idx].index));
+            str.append("完成！");
+            ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+            time++;
+        }
+        else {
+            QString str("进程");
+            str.append(QString::number(ris[idx].index));
+            str.append("运行完一个时间片，优先级下降！");
+            ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+            ris[idx].priority += 2;
+            time++;
+        }
+    }
+}
+
+void Widget::MLFQ() {
 
 }
 
-void Widget::on_pushButton_pause_clicked()
-{
-    status = false;
-    ui->pushButton_start->setEnabled(true);
-    ui->pushButton_pause->setEnabled(false);
-    ui->pushButton_resume->setEnabled(true);
+void Widget::FCFS() {
+
 }
 
-void Widget::on_pushButton_resume_clicked()
-{
-    status = true;
-    ui->pushButton_pause->setEnabled(true);
-    ui->pushButton_resume->setEnabled(false);
+void Widget::SJF() {
+
 }
+
+void Widget::HRN() {
+
+}
+

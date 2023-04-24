@@ -21,6 +21,7 @@ public:
     int startTime;
     int finishTime;
     int turnTime;
+    int doneTime;
 
 private:
 
