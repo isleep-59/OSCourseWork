@@ -10,6 +10,8 @@
 #include <queue>
 #include "rowitem.h"
 
+const int INF = 0x3f3f3f3f;
+
 namespace Ui {
 class Widget;
 }

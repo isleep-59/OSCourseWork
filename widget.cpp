@@ -7,7 +7,6 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     idx = -1;
-    maxx = 9999999;
     curTimePiece = 0;
     timer = new QTimer;
     ui->setupUi(this);
@@ -90,7 +89,7 @@ void Widget::on_pushButton_add_clicked()
         runTime = ui->lineEdit_runTime->text().toInt();
         priority = ui->lineEdit_priority_1->text().toInt();
 
-        if(!(timePiece && arriveTime && runTime && priority)) {
+        if(!(timePiece && runTime && priority)) {
             timePiece = 0;
             QMessageBox::information(this, "警告", "请输入完整信息！");
             return;
@@ -209,6 +208,7 @@ void Widget::on_pushButton_reset_clicked()
     while(ui->tableWidget_finishedQueue->rowCount()) {
         ui->tableWidget_finishedQueue->removeRow(0);
     }
+    ui->listWidget->clear();
 
     ui->comboBox->setEnabled(true);
     ui->pushButton_select->setEnabled(true);
@@ -221,6 +221,8 @@ void Widget::on_pushButton_reset_clicked()
     ui->lineEdit_priority_1->setEnabled(true);
     ui->lineEdit_priority_2->setEnabled(true);
     ui->lineEdit_priority_3->setEnabled(true);
+
+    ui->lcdNumber->display(0);
 
     ris.clear();
     timePiece = 0;
@@ -270,7 +272,7 @@ void Widget::on_pushButton_add_2_clicked()
     int arriveTime, runTime;
     arriveTime = ui->lineEdit_arriveTime_2->text().toInt();
     runTime = ui->lineEdit_runTime_2->text().toInt();
-    if(!(arriveTime && runTime)) {
+    if(!runTime) {
         QMessageBox::information(this, "警告", "请输入完整信息！");
         return;
     }
@@ -360,6 +362,7 @@ void Widget::on_pushButton_start_clicked()
 
 void Widget::RR() {
     if(curTimePiece == 0) {
+        int maxx = INF;
         for(int i = 0; i < ris.size(); ++i) {
             if(ris[i].arriveTime <= time && ris[i].priority < maxx) {
                 idx = i;
@@ -403,6 +406,7 @@ void Widget::RR() {
         ui->listWidget->addItem(new QListWidgetItem(QString(str)));
 
         ris[idx].finishTime = time;
+        ris[idx].turnTime = ris[idx].finishTime - ris[idx].arriveTime;
 
         int rc = ui->tableWidget_finishedQueue->rowCount();
         ui->tableWidget_finishedQueue->insertRow(rc);
@@ -417,6 +421,7 @@ void Widget::RR() {
         int rmv = idx;
         ui->tableWidget_readyQueue->removeRow(rmv);
         ris.erase(ris.begin() + rmv, ris.begin() + rmv + 1);
+        idx = -1;
 
         curTimePiece = 0;
         return;
