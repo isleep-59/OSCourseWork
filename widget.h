@@ -57,6 +57,7 @@ private slots:
 private:
     Ui::Widget *ui;
     std::vector<RowItem> ris;
+    int fin;
     int timePiece;
     int priorities[3];
     int curTimePiece;
@@ -65,6 +66,7 @@ private:
     int idx;
     int maxx;
     QTimer* timer;
+    std::queue<RowItem> que[3];
 };
 
 #endif // WIDGET_H
