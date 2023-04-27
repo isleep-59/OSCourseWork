@@ -72,6 +72,7 @@ private:
 	QTimer* timer;
 	//std::queue<RowItem> que[3];
 	std::queue<int> q[4];
+	std::vector<int> tmp;
 };
 
 #endif // WIDGET_H

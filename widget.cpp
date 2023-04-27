@@ -234,6 +234,11 @@ void Widget::on_pushButton_reset_clicked()
 		priorities[i] = 0;
 	}
 	time = 0;
+	for (int i = 0; i <= 3; ++i) {
+		while (q[i].size()) {
+			q[i].pop();
+		}
+	}
 }
 
 void Widget::on_pushButton_select_2_clicked()
@@ -270,7 +275,16 @@ void Widget::on_pushButton_reset_2_clicked()
 	ui->pushButton_reset_2->setEnabled(false);
 	ui->tabWidget->setTabEnabled(0, true);
 
+	ui->lcdNumber->display(0);
+	ui->listWidget->clear();
+
 	ris.clear();
+	time = 0;
+	for (int i = 0; i <= 3; ++i) {
+		while (q[i].size()) {
+			q[i].pop();
+		}
+	}
 }
 
 void Widget::on_pushButton_add_2_clicked()
@@ -357,6 +371,8 @@ void Widget::timeout_slot() {
 
 	ui->lcdNumber->display(QString::number(time));
 	if (fin == ris.size()) {
+		ui->pushButton_reset->setEnabled(true);
+		ui->pushButton_reset_2->setEnabled(true);
 		timer->stop();
 		return;
 	}
@@ -364,8 +380,12 @@ void Widget::timeout_slot() {
 
 void Widget::on_pushButton_start_clicked()
 {
-	ui->groupBox_prcs->setEnabled(false);
 	ui->pushButton_start->setEnabled(false);
+
+	ui->groupBox_prcs->setEnabled(false);
+	ui->groupBox_jb->setEnabled(false);
+	ui->pushButton_reset->setEnabled(false);
+	ui->pushButton_reset_2->setEnabled(false);
 	timer->start(1000);
 }
 
@@ -557,7 +577,7 @@ void Widget::MLFQ() {
 	}
 
 	if (!flag) {
-		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行进程，等待中...")));
+		ui->listWidget->addItem(new QListWidgetItem(QString("【第" + QString::number(time) + "秒】：" + "当前没有可执行进程，等待中...")));
 		ui->listWidget->scrollToBottom();
 		time++;
 		return;
@@ -565,14 +585,141 @@ void Widget::MLFQ() {
 }
 
 void Widget::FCFS() {
+	for (int i = 0; i < ris.size(); ++i) {
+		if (ris[i].arriveTime <= time && ris[i].currentQueue == 0) {
+			ris[i].currentQueue = 1;
+			q[0].push(i);
+		}
+	}
 
+	bool flag = false;
+	if (q[0].size()) {
+		flag = true;
+		int idx = q[0].front();
+		QString str;
+		if (ris[idx].startTime == 0) {
+			ris[idx].startTime = time;
+			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "开始运行！");
+		}
+		else {
+			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "正在运行...");
+		}
+		ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+		ui->listWidget->scrollToBottom();
+		ris[idx].doneTime++;
+		ris[idx].progressBar->setValue(ris[idx].doneTime);
+
+		time++;
+
+		if (ris[idx].doneTime == ris[idx].runTime) {
+			QString str("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "完成！");
+			ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+			ui->listWidget->scrollToBottom();
+			Sleep(50);
+
+			ris[idx].finishTime = time;
+			ris[idx].turnTime = ris[idx].finishTime - ris[idx].arriveTime;
+
+			int rc = ui->tableWidget_finishedQueue->rowCount();
+			ui->tableWidget_finishedQueue->insertRow(rc);
+			ui->tableWidget_finishedQueue->setItem(rc, 0, new QTableWidgetItem(QString::number(ris[idx].index)));
+			ui->tableWidget_finishedQueue->setItem(rc, 1, new QTableWidgetItem(QString::number(ris[idx].startTime)));
+			ui->tableWidget_finishedQueue->setItem(rc, 2, new QTableWidgetItem(QString::number(ris[idx].finishTime)));
+			ui->tableWidget_finishedQueue->setItem(rc, 3, new QTableWidgetItem(QString::number(ris[idx].turnTime)));
+			for (int j = 0; j < 4; ++j) {
+				ui->tableWidget_finishedQueue->item(rc, j)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+			}
+			ui->tableWidget_finishedQueue->scrollToBottom();
+
+			int x = ris[idx].progressBar->frameGeometry().x();
+			int y = ris[idx].progressBar->frameGeometry().y();
+			int rmv = ui->tableWidget_readyQueue->indexAt(QPoint(x, y)).row();
+			ui->tableWidget_readyQueue->removeRow(rmv);
+
+			fin++;
+			q[0].pop();
+		}
+	}
+	if (!flag) {
+		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行进程，等待中...")));
+		ui->listWidget->scrollToBottom();
+		time++;
+		return;
+	}
 }
 
 void Widget::SJF() {
+	for (int i = 0; i < ris.size(); ++i) {
+		if (ris[i].arriveTime <= time && ris[i].currentQueue == 0) {
+			ris[i].currentQueue = 1;
+			tmp.push_back(i);
+		}
+	}
 
+	bool flag = false;
+	if (tmp.size()) {
+		flag = true;
+		sort(tmp.begin(), tmp.end());
+		int idx = tmp[0];
+		QString str;
+		if (ris[idx].startTime == 0) {
+			ris[idx].startTime = time;
+			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "开始运行！");
+		}
+		else {
+			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "正在运行...");
+		}
+		ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+		ui->listWidget->scrollToBottom();
+		ris[idx].doneTime++;
+		ris[idx].progressBar->setValue(ris[idx].doneTime);
+
+		time++;
+
+		if (ris[idx].doneTime == ris[idx].runTime) {
+			QString str("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "完成！");
+			ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+			ui->listWidget->scrollToBottom();
+			Sleep(50);
+
+			ris[idx].finishTime = time;
+			ris[idx].turnTime = ris[idx].finishTime - ris[idx].arriveTime;
+
+			int rc = ui->tableWidget_finishedQueue->rowCount();
+			ui->tableWidget_finishedQueue->insertRow(rc);
+			ui->tableWidget_finishedQueue->setItem(rc, 0, new QTableWidgetItem(QString::number(ris[idx].index)));
+			ui->tableWidget_finishedQueue->setItem(rc, 1, new QTableWidgetItem(QString::number(ris[idx].startTime)));
+			ui->tableWidget_finishedQueue->setItem(rc, 2, new QTableWidgetItem(QString::number(ris[idx].finishTime)));
+			ui->tableWidget_finishedQueue->setItem(rc, 3, new QTableWidgetItem(QString::number(ris[idx].turnTime)));
+			for (int j = 0; j < 4; ++j) {
+				ui->tableWidget_finishedQueue->item(rc, j)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+			}
+			ui->tableWidget_finishedQueue->scrollToBottom();
+
+			int x = ris[idx].progressBar->frameGeometry().x();
+			int y = ris[idx].progressBar->frameGeometry().y();
+			int rmv = ui->tableWidget_readyQueue->indexAt(QPoint(x, y)).row();
+			ui->tableWidget_readyQueue->removeRow(rmv);
+
+			for (int i = 0; i < tmp.size(); ++i) {
+				if (tmp[i] == idx) {
+					rmv = i;
+					break;
+				}
+			}
+			tmp.erase(tmp.begin() + rmv, tmp.begin() + rmv + 1);
+
+			fin++;
+		}
+	}
+	if (!flag) {
+		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行进程，等待中...")));
+		ui->listWidget->scrollToBottom();
+		time++;
+		return;
+	}
 }
 
 void Widget::HRN() {
 
 }
-
