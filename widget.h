@@ -31,7 +31,7 @@ public:
 	void MLFQ();
 	void FCFS();
 	void SJF();
-	void HRN();
+	void HRRN();
 
 private slots:
 	void timeout_slot();
@@ -60,7 +60,7 @@ private slots:
 
 private:
 	Ui::Widget* ui;
-	std::vector<RowItem> ris;
+	std::vector<RowItem> ris, tmp;
 	int fin;
 	int timePiece;
 	int priorities[3];
@@ -72,7 +72,6 @@ private:
 	QTimer* timer;
 	//std::queue<RowItem> que[3];
 	std::queue<int> q[4];
-	std::vector<int> tmp;
 };
 
 #endif // WIDGET_H
