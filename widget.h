@@ -66,11 +66,9 @@ private:
 	int priorities[3];
 	int curTimePiece;
 	int time;
-	bool status;
 	int idx;
 	int maxx;
 	QTimer* timer;
-	//std::queue<RowItem> que[3];
 	std::queue<int> q[4];
 };
 

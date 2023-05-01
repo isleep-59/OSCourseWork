@@ -13,7 +13,6 @@ Widget::Widget(QWidget* parent) :
 	ui->setupUi(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(timeout_slot()));
 
-	status = false;
 	time = 0;
 	timePiece = 0;
 	for (int i = 0; i < 3; ++i) {
@@ -553,19 +552,21 @@ void Widget::MLFQ() {
 			}
 
 			if (curTimePiece == priorities[i - 1]) {
-				QString str("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "运行完时间片，优先级下降！");
-				ui->listWidget->addItem(new QListWidgetItem(QString(str)));
-				ui->listWidget->scrollToBottom();
+
 				if (ris[idx].currentQueue != 3) {
 					ris[idx].currentQueue++;
 					q[i + 1].push(idx);
 					q[i].pop();
-					//que[i + 1].push(ris[idx]);
-					//que[i].pop();
+					QString str("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "运行完时间片，下降至第" + QString::number(i + 1) + "队列！");
+					ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+					ui->listWidget->scrollToBottom();
 				}
 				else {
 					q[i].push(q[i].front());
 					q[i].pop();
+					QString str("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "运行完时间片，归至第" + QString::number(i) + "队列队尾！");
+					ui->listWidget->addItem(new QListWidgetItem(QString(str)));
+					ui->listWidget->scrollToBottom();
 				}
 
 				curTimePiece = 0;
@@ -599,10 +600,10 @@ void Widget::FCFS() {
 		QString str;
 		if (ris[idx].startTime == 0) {
 			ris[idx].startTime = time;
-			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "开始运行！");
+			str.append("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "开始运行！");
 		}
 		else {
-			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "正在运行...");
+			str.append("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "正在运行...");
 		}
 		ui->listWidget->addItem(new QListWidgetItem(QString(str)));
 		ui->listWidget->scrollToBottom();
@@ -612,7 +613,7 @@ void Widget::FCFS() {
 		time++;
 
 		if (ris[idx].doneTime == ris[idx].runTime) {
-			QString str("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "完成！");
+			QString str("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "完成！");
 			ui->listWidget->addItem(new QListWidgetItem(QString(str)));
 			ui->listWidget->scrollToBottom();
 			Sleep(50);
@@ -641,7 +642,7 @@ void Widget::FCFS() {
 		}
 	}
 	if (!flag) {
-		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行进程，等待中...")));
+		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行作业，等待中...")));
 		ui->listWidget->scrollToBottom();
 		time++;
 		return;
@@ -668,10 +669,10 @@ void Widget::SJF() {
 		QString str;
 		if (ris[idx].startTime == 0) {
 			ris[idx].startTime = time;
-			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "开始运行！");
+			str.append("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "开始运行！");
 		}
 		else {
-			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "正在运行...");
+			str.append("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "正在运行...");
 		}
 		ui->listWidget->addItem(new QListWidgetItem(QString(str)));
 		ui->listWidget->scrollToBottom();
@@ -681,7 +682,7 @@ void Widget::SJF() {
 		time++;
 
 		if (ris[idx].doneTime == ris[idx].runTime) {
-			QString str("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "完成！");
+			QString str("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "完成！");
 			ui->listWidget->addItem(new QListWidgetItem(QString(str)));
 			ui->listWidget->scrollToBottom();
 			Sleep(50);
@@ -717,7 +718,7 @@ void Widget::SJF() {
 		}
 	}
 	if (!flag) {
-		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行进程，等待中...")));
+		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行作业，等待中...")));
 		ui->listWidget->scrollToBottom();
 		time++;
 		return;
@@ -744,10 +745,10 @@ void Widget::HRRN() {
 		QString str;
 		if (ris[idx].startTime == 0) {
 			ris[idx].startTime = time;
-			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "开始运行！");
+			str.append("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "开始运行！");
 		}
 		else {
-			str.append("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "正在运行...");
+			str.append("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "正在运行...");
 		}
 		ui->listWidget->addItem(new QListWidgetItem(QString(str)));
 		ui->listWidget->scrollToBottom();
@@ -757,7 +758,7 @@ void Widget::HRRN() {
 		time++;
 
 		if (ris[idx].doneTime == ris[idx].runTime) {
-			QString str("【第" + QString::number(time) + "秒】：" + "进程" + QString::number(ris[idx].index) + "完成！");
+			QString str("【第" + QString::number(time) + "秒】：" + "作业" + QString::number(ris[idx].index) + "完成！");
 			ui->listWidget->addItem(new QListWidgetItem(QString(str)));
 			ui->listWidget->scrollToBottom();
 			Sleep(50);
@@ -798,7 +799,7 @@ void Widget::HRRN() {
 		}
 	}
 	if (!flag) {
-		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行进程，等待中...")));
+		ui->listWidget->addItem(new QListWidgetItem(QString("当前没有可执行作业，等待中...")));
 		ui->listWidget->scrollToBottom();
 		time++;
 		return;
