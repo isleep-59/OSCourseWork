@@ -70,6 +70,7 @@ private:
 	int maxx;
 	QTimer* timer;
 	std::queue<int> q[4];
+	QString doneStr;
 };
 
 #endif // WIDGET_H
