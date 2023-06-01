@@ -134,7 +134,7 @@ void Widget::on_pushButton_add_clicked()
 	ui->tableWidget_readyQueue->setItem(r, 4, new QTableWidgetItem(QString::number(ris.back().currentQueue)));
 	ui->tableWidget_readyQueue->setCellWidget(r, 5, ris.back().progressBar);
 
-	for (int j = 0; j < 4; ++j) {
+    for (int j = 0; j < 5; ++j) {
 		ui->tableWidget_readyQueue->item(r, j)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	}
 
@@ -498,6 +498,7 @@ void Widget::MLFQ() {
 			int y = ris[i].progressBar->frameGeometry().y();
 			int chg = ui->tableWidget_readyQueue->indexAt(QPoint(x, y)).row();
 			ui->tableWidget_readyQueue->setItem(chg, 4, new QTableWidgetItem(QString::number(ris[i].currentQueue)));
+            ui->tableWidget_readyQueue->item(chg, 4)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 		}
 	}
 
@@ -540,6 +541,7 @@ void Widget::MLFQ() {
 			int y = ris[idx].progressBar->frameGeometry().y();
 			int chg = ui->tableWidget_readyQueue->indexAt(QPoint(x, y)).row();
 			ui->tableWidget_readyQueue->setItem(chg, 4, new QTableWidgetItem(QString::number(ris[idx].currentQueue)));
+            ui->tableWidget_readyQueue->item(chg, 4)->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
 			time++;
 			curTimePiece++;
